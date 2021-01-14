@@ -1,0 +1,18 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/mianBackColor</item>
+        <item name="colorPrimaryDark">@color/mianBackColor</item>
+        <item name="colorAccent">@color/mianBackColor</item>
+    </style>
+
+    <style name="FullScreen" parent="AppTheme">
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
+    <style name="LoginEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#ffe900</item>
+        <item name="colorControlActivated">#ffc900</item>
+    </style>
+</resources>

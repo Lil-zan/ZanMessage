@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/layout_my"
+    android:layout_height="match_parent"
+    android:background="#999999"
+    tools:context=".view.activity.RegistActivity">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/new_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="10dp"
+        android:hint="用户名"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:textSize="16sp"
+        android:theme="@style/LoginEditText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/new_pasword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:hint="密码"
+        android:imeOptions="actionNext"
+        android:inputType="numberPassword"
+        android:textSize="16sp"
+        android:theme="@style/LoginEditText"
+        app:layout_constraintTop_toBottomOf="@+id/new_user" />
+
+    <Button
+        android:id="@+id/new_regist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/bt_login_selector"
+        android:text="注册"
+        android:textSize="26sp"
+        app:layout_constraintTop_toBottomOf="@+id/new_pasword" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

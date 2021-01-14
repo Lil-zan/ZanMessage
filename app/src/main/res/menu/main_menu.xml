@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/main_menu_add_friend"
+        android:icon="@mipmap/ic_launcher"
+        android:title="添加好友" />
+    <item
+        android:id="@+id/main_menu_share_friend"
+        android:icon="@mipmap/ic_launcher"
+        android:title="分享好友" />
+    <item
+        android:id="@+id/main_menu_about_me"
+        android:icon="@mipmap/ic_launcher"
+        android:title="关于我们" />
+</menu>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="mianColor">#ffe900</color>
+    <color name="mianBackColor">#ffc900</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#363636</color>
+    <color name="mainBackGray">#bbb</color>
+    <color name="mainGray">#ddd</color>
+    <color name="backgroudGray">#999</color>
+    <color name="transparencyYellow">#99ffc900</color>
+    <color name="beigeGray">#DCDCDB</color>
+    <color name="ghostWhite">#EDEDEB</color>
+    <color name="badgesRed">#ff2f00</color>
+</resources>
