@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.java.zanmessage.R;
+import com.java.zanmessage.presenter.MsgPresenter;
 import com.java.zanmessage.view.activity.ChatActivity;
 import com.java.zanmessage.view.adapter.ConversationAdapter;
 
@@ -55,6 +56,8 @@ public class MsgFragment extends BaseFragment implements MsgInterface, Conversat
     public void onDestroyView() {
         super.onDestroyView();
         EventBus.getDefault().unregister(this);
+        mRecyclerView = null;
+        conversationAdapter = null;
     }
 
     @Override

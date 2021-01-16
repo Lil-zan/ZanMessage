@@ -59,6 +59,11 @@ public class ZanApplication extends Application implements EMContactListener, EM
     @Override
     public void onCreate() {
         super.onCreate();
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            return;
+//        }
+//        LeakCanary.install(this);
+
         //初始化环信
         initHuanxin();
         //初始化leanCloud云数据库

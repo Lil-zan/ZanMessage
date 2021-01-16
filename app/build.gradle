@@ -69,5 +69,9 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.2.0'
 
     //第三方内存泄漏检测工具
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6'
+    // NEW: LeakCanary for releases!
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-release:1.6'
+    // Optional: detect retained objects. This helps but is not required.
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-object-watcher-android:1.6'
 }

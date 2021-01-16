@@ -1,8 +1,8 @@
-package com.java.zanmessage.view.fragment;
+package com.java.zanmessage.presenter;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
-import com.java.zanmessage.presenter.IntfMsgPresenter;
+import com.java.zanmessage.view.fragment.MsgInterface;
 
 import java.util.ArrayList;
 import java.util.Collection;

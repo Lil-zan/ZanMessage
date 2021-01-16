@@ -33,6 +33,13 @@ public class StateFragment extends BaseFragment implements View.OnClickListener 
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //静态fragment中引用到的资源需要释放
+        loginOut = null;
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         head = (ImageView) view.findViewById(R.id.head);

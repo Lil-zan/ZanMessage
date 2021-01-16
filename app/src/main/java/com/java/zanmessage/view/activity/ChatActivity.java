@@ -48,6 +48,8 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+
         //初始化控件
         initView();
         //初始化本地数据

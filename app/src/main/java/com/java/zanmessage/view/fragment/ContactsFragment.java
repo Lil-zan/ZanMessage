@@ -68,6 +68,9 @@ public class ContactsFragment extends BaseFragment implements ContactsInterface,
         super.onDestroyView();
         //销毁fragment时要注销EventBus防止内存泄漏
         EventBus.getDefault().unregister(this);
+        //静态fragment问题一大堆。
+        mContactsLayout = null;
+        adapter = null;
     }
 
     @Override
