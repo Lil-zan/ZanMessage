@@ -15,7 +15,9 @@ import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Build;
 
+import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMContactListener;
+import com.hyphenate.EMError;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
@@ -26,7 +28,6 @@ import com.java.zanmessage.R;
 import com.java.zanmessage.event.ContactChangeEvent;
 import com.java.zanmessage.utils.Contant;
 import com.java.zanmessage.utils.DBUtils;
-import com.java.zanmessage.utils.ThreadUtils;
 import com.java.zanmessage.view.activity.ChatActivity;
 import com.java.zanmessage.view.activity.MainActivity;
 
@@ -39,7 +40,7 @@ import androidx.core.app.NotificationCompat;
 import cn.leancloud.AVOSCloud;
 
 
-public class ZanApplication extends Application implements EMContactListener, EMMessageListener {
+public class ZanApplication extends Application implements EMContactListener, EMMessageListener, EMConnectionListener {
 
 
     private SoundPool mSoundPool;
@@ -125,6 +126,9 @@ public class ZanApplication extends Application implements EMContactListener, EM
 
         //环信即时通讯消息监听
         EMClient.getInstance().chatManager().addMessageListener(this);
+
+        //注册一个监听连接状态的listener
+        EMClient.getInstance().addConnectionListener(this);
     }
 
     private String getAppName(int pID) {
@@ -189,15 +193,8 @@ public class ZanApplication extends Application implements EMContactListener, EM
     public void onMessageReceived(List<EMMessage> list) {
         EMMessage emMessage = list.get(0);
         EventBus.getDefault().post(emMessage);
-
-        ThreadUtils.runOnUIThread(new Runnable() {
-            @Override
-            public void run() {
-                //收到消息做通知。
-                showNotifycation(emMessage);
-            }
-        });
-
+        //收到消息做通知。
+        showNotifycation(emMessage);
 
     }
 
@@ -209,6 +206,7 @@ public class ZanApplication extends Application implements EMContactListener, EM
             EMTextMessageBody body = (EMTextMessageBody) emMessage.getBody();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+                notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
                 notificationManager.createNotificationChannel(notificationChannel);
             }
 
@@ -234,6 +232,7 @@ public class ZanApplication extends Application implements EMContactListener, EM
                     .setAutoCancel(true)
                     .build();
             notificationManager.notify(Contant.MSG_NOTIFICATION_ID, notification);
+
         } else {
             mSoundPool.play(ringtone, 1, 1, 0, 0, 1);
         }
@@ -293,5 +292,27 @@ public class ZanApplication extends Application implements EMContactListener, EM
             }
         }
         return inBackground;
+    }
+
+    //环信链接监听
+    @Override
+    public void onConnected() {
+
+    }
+
+    //环信链接监听
+    @Override
+    public void onDisconnected(int error) {
+        if (error == EMError.USER_REMOVED) {
+//            onUserException(Constant.ACCOUNT_REMOVED);
+        } else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
+//            onUserException(Constant.ACCOUNT_CONFLICT);
+        } else if (error == EMError.SERVER_SERVICE_RESTRICTED) {
+//            onUserException(Constant.ACCOUNT_FORBIDDEN);
+        } else if (error == EMError.USER_KICKED_BY_CHANGE_PASSWORD) {
+//            onUserException(Constant.ACCOUNT_KICKED_BY_CHANGE_PASSWORD);
+        } else if (error == EMError.USER_KICKED_BY_OTHER_DEVICE) {
+//            onUserException(Constant.ACCOUNT_KICKED_BY_OTHER_DEVICE);
+        }
     }
 }
