@@ -1,5 +1,6 @@
 package com.java.zanmessage.application;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.app.Notification;
@@ -14,6 +15,7 @@ import android.media.RingtoneManager;
 import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMContactListener;
@@ -29,10 +31,12 @@ import com.java.zanmessage.event.ContactChangeEvent;
 import com.java.zanmessage.utils.Contant;
 import com.java.zanmessage.utils.DBUtils;
 import com.java.zanmessage.view.activity.ChatActivity;
+import com.java.zanmessage.view.activity.LoginAcitity;
 import com.java.zanmessage.view.activity.MainActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -50,7 +54,7 @@ public class ZanApplication extends Application implements EMContactListener, EM
     private NotificationManager notificationManager;
     private String CHANNEL_ID = "zan";
     private String CHANNEL_NAME = "新消息通知";
-
+    private List<Activity> activityList = new ArrayList<>();
 
     @Override
     public void onCreate() {
@@ -61,6 +65,8 @@ public class ZanApplication extends Application implements EMContactListener, EM
         initLean();
         //初始化DBUtils，给DBUtils提供全局上下文。
         DBUtils.initDBUtils(this);
+        //注册监听所有activity状态
+        listenerActivity();
         //获取Activity管理器
         activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         //获取系统铃声管理器
@@ -72,6 +78,46 @@ public class ZanApplication extends Application implements EMContactListener, EM
         initVolume();
 
 
+    }
+
+    //监听所有activity生命周期
+    private void listenerActivity() {
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                activityList.add(activity);
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+                activityList.remove(activity);
+            }
+        });
     }
 
     //获取本地铃声和初始化soundpool
@@ -306,6 +352,18 @@ public class ZanApplication extends Application implements EMContactListener, EM
         if (error == EMError.USER_REMOVED) {
 //            onUserException(Constant.ACCOUNT_REMOVED);
         } else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
+            //有另一台设备登陆账号。
+            //遍历所有activity，并finish掉。
+            for (int i = 0; i < activityList.size(); i++) {
+                Activity activity = activityList.get(i);
+                activity.finish();
+            }
+            //清空记录的activity，activity注册监听里虽然已经移除，保守点。手动再移除一遍吧
+            activityList.clear();
+            //重新启动一个登陆activity等待用操作
+            Intent intent = new Intent(this, LoginAcitity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
 //            onUserException(Constant.ACCOUNT_CONFLICT);
         } else if (error == EMError.SERVER_SERVICE_RESTRICTED) {
 //            onUserException(Constant.ACCOUNT_FORBIDDEN);
