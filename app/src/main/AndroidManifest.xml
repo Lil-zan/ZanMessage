@@ -28,6 +28,7 @@
         android:theme="@style/FullScreen">
         <activity
             android:name=".view.activity.ChatActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:launchMode="singleTask" />
         <activity android:name=".view.activity.AddFriendActivity" />
         <activity android:name=".view.activity.RegistActivity" />

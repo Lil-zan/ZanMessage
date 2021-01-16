@@ -2,6 +2,7 @@ package com.java.zanmessage.view.activity;
 
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -59,9 +60,12 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
 
         //修改状态栏的设置
         BarUtils.setStatusBarColor(this, getResources().getColor(R.color.beigeGray));
-        BarUtils.setStatusBarLightMode(this, true);
-        BarUtils.addMarginTopEqualStatusBarHeight(mLayout);
-        BarUtils.setNavBarVisibility(this, false);//这句代码有问题。当软键盘弹出后底部导航栏会一直出现
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BarUtils.setNavBarColor(this, getResources().getColor(R.color.ghostWhite));
+        }
+//        BarUtils.setStatusBarLightMode(this, true);
+//        BarUtils.addMarginTopEqualStatusBarHeight(mLayout);
+//        BarUtils.setNavBarVisibility(this, false);//这句代码有问题。当软键盘弹出后底部导航栏会一直出现
 
         mNotification = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mNotification.cancel(Contant.MSG_NOTIFICATION_ID);
