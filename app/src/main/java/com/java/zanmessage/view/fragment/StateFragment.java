@@ -36,7 +36,9 @@ public class StateFragment extends BaseFragment implements View.OnClickListener 
     public void onDestroyView() {
         super.onDestroyView();
         //静态fragment中引用到的资源需要释放
+        head = null;
         loginOut = null;
+        calendView = null;
     }
 
     @Override
